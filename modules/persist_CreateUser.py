@@ -1,12 +1,11 @@
-# AWS TTP Discovery / Alternatuve enumeration of users, roles, groups, and policies
-# GetAuthorizationDetails
+# AWS TTP Persistence / persistence create user
+# Createuser
 # Hashicorp Red
 import boto3
 import time
 
 def listActions():
-    print('CreateAccessKey ✓')
-    print('DeleteAccessKey ✓')
+    print('CreateUser ✓')
 
 def iam_persist(ak,sk):
     print('\nExecuting IAM AccessKey Peristence:')
@@ -18,5 +17,4 @@ def iam_persist(ak,sk):
     iam.delete_access_key(UserName='persisty', AccessKeyId=key_response['AccessKey']['AccessKeyId'])
     listActions()
     return key_response
-
 
