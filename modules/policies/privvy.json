@@ -1,0 +1,14 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Sid": "Persist",
+        "Action": [
+          "iam:CreateLoginProfile",
+          "iam:UpdateLoginProfile",
+        ],
+        "Effect": "Allow",
+        "Resource": "arn:aws:iam::*:user/${aws:username}"
+      }
+    ]
+  }
