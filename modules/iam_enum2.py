@@ -2,29 +2,25 @@
 # GetAuthorizationDetails
 # Hashicorp Red
 import boto3
+import time
+
+def listActions():
+    print('GetAccountAuthorizationDetails -User ✓')
+    print('GetAccountAuthorizationDetails -Group ✓')
+    print('GetAccountAuthorizationDetails -Role ✓')
+    print('GetAccountAuthorizationDetails -LocalManagedPolicy ✓')
+    print('GetAccountAuthorizationDetails -AWSManagedPolicy ✓')
 
 
-# Use default session for now (maybe look to grab from environment variable for terraform runs.)
-session = boto3.session.Session(profile_name='default')
-client = session.client('iam')
+def iam_enumv2(ak,sk):
+    # Use supplied iam keys
+    session = boto3.session.Session(aws_access_key_id=ak, aws_secret_access_key=sk, region_name='us-east-1')
+    client = session.client('iam')
+    print('\nExecuting IAM Enumeration v2:')
 
-def iam_enum2():
-    print('---Users---')
-    print(client.get_account_authorization_details(Filter=['User']))
-    print('---End---\n')
-
-    print('---Groups---')
-    print(client.get_account_authorization_details(Filter=['Group']))
-    print('---End---\n')
-
-    print('---Roles---')
-    print(client.get_account_authorization_details(Filter=['Role']))
-    print('---End---\n')
-
-    print('---Local Managed Policies---')
-    print(client.get_account_authorization_details(Filter=['LocalManagedPolicy']))
-    print('---End---\n')
-
-    print('---AWS Managed Policies---')
-    print(client.get_account_authorization_details(Filter=['AWSManagedPolicy']))
-    print('---End---\n')
+    client.get_account_authorization_details(Filter=['User'])
+    client.get_account_authorization_details(Filter=['Group'])
+    client.get_account_authorization_details(Filter=['Role'])
+    client.get_account_authorization_details(Filter=['LocalManagedPolicy'])
+    client.get_account_authorization_details(Filter=['AWSManagedPolicy'])
+    listActions()

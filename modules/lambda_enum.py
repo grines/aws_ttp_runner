@@ -1,20 +1,20 @@
 # AWS TTP Discovery / Enumerate Lambda functions
 # Hashicorp
 import boto3
+import time
 
 regions = ['us-east-2', 'us-east-1', 'us-west-1', 'us-west-2']
 
-# Use default session for now (maybe look to grab from environment variable for terraform runs.)
-session = boto3.session.Session(profile_name='default')
+def listActions():
+    print('ListFunctions ✓')
 
-def lambdas(region):
-    lam = session.client('lambda', region_name=region)
-    response = lam.list_functions()
-    for r in response['Functions']:
-        print('---Lambda Functions---')
-        print(r)
-        print('---Lambda Functions End---\n')
+def lambdas(region,ak,sk):
+    session = boto3.session.Session(aws_access_key_id=ak, aws_secret_access_key=sk, region_name=region)
+    lam = session.client('lambda')
+    lam.list_functions()
 
-def lambda_enum():
+def lambda_enum(ak,sk):
+    print('\nExecuting lambda enumeration:')
     for region in regions:
-        secrets = lambdas(region)
+        lambdas(region,ak,sk)
+    listActions()

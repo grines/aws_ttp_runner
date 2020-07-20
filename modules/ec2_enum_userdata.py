@@ -2,22 +2,25 @@
 # Hashicorp
 import boto3
 import base64
+import time
 
 regions = ['us-east-2', 'us-east-1', 'us-west-1', 'us-west-2']
 
-# Use default session for now (maybe look to grab from environment variable for terraform runs.)
-session = boto3.session.Session(profile_name='default')
+def listActions():
+    print('DescribeInstances ✓')
+    print('DescribeInstanceAttribute ✓')
 
-def userdata(region):
-    ec2 = session.resource('ec2', region_name=region)
+
+def userdata(region,ak,sk):
+    session = boto3.session.Session(aws_access_key_id=ak, aws_secret_access_key=sk, region_name=region)
+    ec2 = session.resource('ec2')
     for instance in ec2.instances.all():
         response = instance.describe_attribute(Attribute='userData')
         if 'UserData' in response and response['UserData']:
-            raw_userdata = base64.b64decode(response['UserData']['Value'])
-            print('---User Data---')
-            print(raw_userdata)
-            print('---User Data End---\n')
+            base64.b64decode(response['UserData']['Value'])
 
-def ec2_enum_userdata():
+def ec2_enum_userdata(ak,sk):
+    print('\nExecuting EC2 UserData enumeration:')
     for region in regions:
-        userdata(region)
+        userdata(region,ak,sk)
+    listActions()

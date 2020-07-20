@@ -2,19 +2,21 @@
 # DescribeParameters ListSecrets
 # Hashicorp Red
 import boto3
+import time
 
 
-# Use default session for now (maybe look to grab from environment variable for terraform runs.)
-session = boto3.session.Session(profile_name='default')
-client = session.client('ssm')
-client2 = session.client('secretsmanager')
+def listActions():
+    print('DescribeParameters ✓')
+    print('ListSecrets ✓')
 
-def enum_secrets():
-    print('---List secrets in SSM---')
-    print(client.describe_parameters())
-    print('---End---\n')
+def enum_secrets(ak,sk):
+    # Use supplied iam keys
+    session = boto3.session.Session(aws_access_key_id=ak, aws_secret_access_key=sk, region_name='us-east-1')
+    client_ssm = session.client('ssm')
+    client_secrets = session.client('secretsmanager')
+    print('\nExecuting Secrets Enumeration:')
 
-    print('---List secrets in Secrets Manager---')
-    print(client2.list_secrets())
-    print('---End---\n')
+    client_ssm.describe_parameters()
+    client_secrets.list_secrets()
+    listActions()
 
