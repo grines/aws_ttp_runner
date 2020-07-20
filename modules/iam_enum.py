@@ -10,30 +10,21 @@ def iam_enum(ak,sk):
     # Use supplied iam keys
     session = boto3.session.Session(aws_access_key_id=ak, aws_secret_access_key=sk, region_name='us-east-1')
     client = session.client('iam')
+    print('\nExecuting IAM Enumeration:')
+
     # Store users list
     users = client.list_users()
+    print('ListUsers ✓')
     user_list = []
 
     groups = client.list_groups()
-    print('---Groups---')
-    for g in groups['Groups']:
-      print(g['GroupName'])
-    print('---End Groups---\n')
-
+    print('ListGroups ✓')
     roles = client.list_roles()
-    print('---Roles---')
-    for r in roles['Roles']:    
-        print(r['RoleName'])
-    print('---End Roles---\n')
-
+    print('ListRoles ✓')
     policies = client.list_policies()
-    print('---Policies---')
-    for p in policies['Policies']:
-        print(p['PolicyName'])
-    print('---End Policies---\n')
+    print('ListPolicies ✓')
 
     # loop through and enumerate users
-    print('---User Details---')
     for key in users['Users']:
         result = {}
         Policies = []
@@ -66,5 +57,7 @@ def iam_enum(ak,sk):
             result['isMFADeviceConfigured']=True    
         user_list.append(result)
 
-    for key in user_list:
-        print(key)
+    print('ListUserPolicies ✓')
+    print('ListAttachedUserPolicies ✓')
+    print('ListGroupsForUser ✓')
+    print('ListMFADevices ✓')

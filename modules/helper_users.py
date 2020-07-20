@@ -13,6 +13,8 @@ def usercheck(userid):
         user = 'enuumy'
     if userid == 2:
         user = 'persisty'
+    if userid == 3:
+        user = 'privvy'
     return user
     
 
@@ -20,6 +22,7 @@ def createuser(username):
     user = usercheck(username)
     if user:
         # Create user
+        print('\n-----\n-Building ' + user + ' user-')
         iam.create_user(UserName=user)
         with open('modules/policies/' + user +'.json') as json_file:
             policy_json = json.load(json_file)
@@ -32,13 +35,7 @@ def createuser(username):
 def destroyuser(username,accesskey):
     user = usercheck(username)
     if user:
+        print('\n-Destroying ' + user + ' user-\n-----\n')
         iam.delete_access_key(UserName=user, AccessKeyId=accesskey)
         iam.delete_user_policy(UserName=user, PolicyName=user)
         iam.delete_user(UserName=user)
-
-# test block
-#data = createuser(1)
-#ak = data['AccessKey']['AccessKeyId']
-#sk = data['AccessKey']['SecretAccessKey']
-
-#destroyuser(1,ak)

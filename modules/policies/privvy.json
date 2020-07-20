@@ -2,10 +2,20 @@
     "Version": "2012-10-17",
     "Statement": [
       {
-        "Sid": "Persist",
+        "Sid": "Privvy",
         "Action": [
           "iam:CreateLoginProfile",
           "iam:UpdateLoginProfile",
+          "iam:AddUserToGroup",
+          "iam:CreatePolicyVersion",
+          "iam:SetDefaultPolicyVersion",
+          "iam:AttachUserPolicy",
+          "iam:AttachGroupPolicy",
+          "iam:AttachRolePolicy",
+          "iam:PutUserPolicy",
+          "iam:PutGroupPolicy",
+          "iam:PutRolePolicy",
+          "iam:PassRole"
         ],
         "Effect": "Allow",
         "Resource": "arn:aws:iam::*:user/${aws:username}"

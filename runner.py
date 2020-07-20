@@ -15,7 +15,7 @@ from modules.helper_users import createuser, destroyuser
 
 
 ### Enumeration/Discovery TTPs
-# Create enuumy user
+# Create enumeration user
 enuumy = createuser(1)
 # TTPs
 #ec2_enum_userdata()
@@ -30,7 +30,7 @@ destroyuser(1,enuumy['AccessKey']['AccessKeyId'])
 
 
 ### Persistence TTPs
-# Create enuumy user
+# Create persistence user
 persisty = createuser(2)
 # TTPs
 iam_persist(persisty['AccessKey']['AccessKeyId'],persisty['AccessKey']['SecretAccessKey'])
@@ -39,3 +39,9 @@ destroyuser(2,persisty['AccessKey']['AccessKeyId'])
 
 
 ### Privilege Escalation TTPs
+# Create enuumy user
+privvy = createuser(3)
+# TTPs
+
+# Destroy privilege escalation user
+destroyuser(3,privvy['AccessKey']['AccessKeyId'])
