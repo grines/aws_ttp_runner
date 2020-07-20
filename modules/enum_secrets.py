@@ -9,11 +9,12 @@ session = boto3.session.Session(profile_name='default')
 client = session.client('ssm')
 client2 = session.client('secretsmanager')
 
-print('---List secrets in SSM---')
-print(client.describe_parameters())
-print('---End---\n')
+def enum_secrets():
+    print('---List secrets in SSM---')
+    print(client.describe_parameters())
+    print('---End---\n')
 
-print('---List secrets in Secrets Manager---')
-print(client2.list_secrets())
-print('---End---\n')
+    print('---List secrets in Secrets Manager---')
+    print(client2.list_secrets())
+    print('---End---\n')
 

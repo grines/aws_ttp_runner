@@ -10,7 +10,6 @@ session = boto3.session.Session(profile_name='default')
 
 def userdata(region):
     ec2 = session.resource('ec2', region_name=region)
-    instances = []
     for instance in ec2.instances.all():
         response = instance.describe_attribute(Attribute='userData')
         if 'UserData' in response and response['UserData']:
@@ -19,6 +18,6 @@ def userdata(region):
             print(raw_userdata)
             print('---User Data End---\n')
 
-
-for region in regions:
-    enum = userdata(region)
+def ec2_enum_userdata():
+    for region in regions:
+        userdata(region)

@@ -15,5 +15,6 @@ def lambdas(region):
         print(r)
         print('---Lambda Functions End---\n')
 
-for region in regions:
-    secrets = lambdas(region)
+def lambda_enum():
+    for region in regions:
+        secrets = lambdas(region)

@@ -66,5 +66,6 @@ def network(region):
     print(client.describe_vpcs())
     print('---End---\n')
 
-for region in regions:
-    enum = network(region)
+def enum_network():
+    for region in regions:
+        enum = network(region)
