@@ -5,10 +5,11 @@
         "Sid": "Persist",
         "Action": [
           "iam:CreateAccessKey",
-          "iam:CreateUser"
+          "iam:CreateUser",
+          "iam:DeleteAccessKey"
         ],
         "Effect": "Allow",
-        "Resource": "*"
+        "Resource": "arn:aws:iam::*:user/${aws:username}"
       }
     ]
   }
