@@ -2,13 +2,14 @@
 # ListGroups, ListRoles, ListPolicies, ListAttachedUserPolicies, ListGroupsForUser, ListMFADevices, ListUserPolicies, ListUsers
 # Hashicorp Red
 import boto3
+import time
 
 
-# Use default session for now (maybe look to grab from environment variable for terraform runs.)
-session = boto3.session.Session(profile_name='default')
-client = session.client('iam')
-
-def iam_enum():
+def iam_enum(ak,sk):
+    time.sleep(10)
+    # Use supplied iam keys
+    session = boto3.session.Session(aws_access_key_id=ak, aws_secret_access_key=sk, region_name='us-east-1')
+    client = session.client('iam')
     # Store users list
     users = client.list_users()
     user_list = []

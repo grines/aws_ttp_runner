@@ -1,0 +1,20 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Sid": "Enumeration",
+        "Action": [
+          "iam:ListUsers",
+          "iam:ListRoles",
+          "iam:ListGroups",
+          "iam:ListPolicies",
+          "iam:ListUserPolicies",
+          "iam:ListAttachedUserPolicies",
+          "iam:ListGroupsForUser",
+          "iam:ListMFADevices"
+        ],
+        "Effect": "Allow",
+        "Resource": "*"
+      }
+    ]
+  }
