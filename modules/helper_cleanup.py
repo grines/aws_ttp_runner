@@ -49,8 +49,17 @@ def cleanup_policies():
     response = iam.delete_policy(PolicyArn='arn:aws:iam::240213749104:policy/SSM_EC2')
     print(response)
 
-def cleanup_e2s():
-    print('Clean EC2s by tag')
+def cleanup_ec2s():
+    client = session.client('ec2')
+    print('Terminate EC2s by Runner tag')
+    custom_filter = [{
+    'Name':'tag:Runner', 
+    'Values': ['1']}]
+    instances = client.describe_instances(Filters=custom_filter)
+    for instance in instances['Reservations']:
+        for i in instance['Instances']:
+            print(i['InstanceId'])
+            client.terminate_instances(InstanceIds=[i['InstanceId']])
 
 def cleanup_lambdas():
     print('Clean Lambdas by tag')
@@ -71,5 +80,6 @@ def clean():
         cleanup_policies()
     except:
         pass
+    cleanup_ec2s()
 
 clean()

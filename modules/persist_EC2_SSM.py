@@ -68,7 +68,7 @@ def create_role(ak,sk):
     return True
 
 def createec2_persist(ak,sk):
-    print('\nExecuting EC2 CreateInstance Persistence:')
+    print('\nExecuting EC2 CreateInstance Persistence (SSM):')
     create_role(ak,sk)
     time.sleep(15)
     # Use supplied iam keys
@@ -79,7 +79,17 @@ def createec2_persist(ak,sk):
         MinCount=1, MaxCount=1, 
         IamInstanceProfile={
         'Name': 'SSM_EC2_Role'
-        })
+        },
+        TagSpecifications=[{
+            'ResourceType': 'instance',
+            'Tags': [
+                {
+                    'Key': 'Runner',
+                    'Value': '1'
+                },
+              ]
+            },
+        ])
     time.sleep(5)
     instance_id = instance[0].instance_id
     instance = ec2.Instance(instance_id)

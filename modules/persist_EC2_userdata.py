@@ -58,8 +58,18 @@ def ec2userdata_persist(ak,sk):
         MinCount=1, MaxCount=1, 
         UserData=userdata, 
         IamInstanceProfile={
-        'Name': 'OrganizationalAdminRole'
-        })
+            'Name': 'OrganizationalAdminRole'
+            },
+        TagSpecifications=[{
+            'ResourceType': 'instance',
+            'Tags': [
+                {
+                    'Key': 'Runner',
+                    'Value': '1'
+                },
+              ]
+            },
+        ])
     time.sleep(5)
     listActions()
     return True
