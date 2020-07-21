@@ -2,6 +2,7 @@
 # enumy / privy / persisty / exfily
 import boto3
 import json
+import time
 
 # Use default session for now (maybe look to grab from environment variable for terraform runs.)
 session = boto3.session.Session(profile_name='default')
@@ -30,6 +31,7 @@ def createuser(username):
 
         # Generate new access key pair
         key_response = iam.create_access_key(UserName=user)
+        time.sleep(15) # wait for credentials to register
         return key_response
 
 def destroyuser(username,accesskey):

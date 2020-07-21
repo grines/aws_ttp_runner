@@ -1,20 +1,24 @@
 # AWS TTP Persistence / persistence create user
-# Createuser
+# CreateUser DeleteUser CreateAccessKey DeleteAccessKey
 # Hashicorp Red
 import boto3
 import time
 
 def listActions():
     print('CreateUser ✓')
+    print('DeleteUser ✓')
+    print('CreateAccessKey ✓')
+    print('DeleteAccessKey ✓')
 
-def iam_persist(ak,sk):
-    print('\nExecuting IAM AccessKey Peristence:')
-    time.sleep(10)
+def createuser_persist(ak,sk):
+    print('\nExecuting IAM CreateUser Peristence:')
     # Use supplied iam keys
     session = boto3.session.Session(aws_access_key_id=ak, aws_secret_access_key=sk, region_name='us-east-1')
     iam = session.client('iam')
-    key_response = iam.create_access_key(UserName='persisty')
-    iam.delete_access_key(UserName='persisty', AccessKeyId=key_response['AccessKey']['AccessKeyId'])
+    response = iam.create_user(UserName='dummmy')
+    key_response = iam.create_access_key(UserName='dummmy')
+    iam.delete_access_key(UserName='dummmy', AccessKeyId=key_response['AccessKey']['AccessKeyId'])
+    iam.delete_user(UserName='dummmy')
     listActions()
-    return key_response
+    return response
 

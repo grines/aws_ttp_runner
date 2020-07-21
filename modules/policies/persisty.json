@@ -6,10 +6,19 @@
         "Action": [
           "iam:CreateAccessKey",
           "iam:CreateUser",
-          "iam:DeleteAccessKey"
+          "iam:DeleteAccessKey",
+          "iam:DeleteUser"
         ],
         "Effect": "Allow",
-        "Resource": "arn:aws:iam::*:user/${aws:username}"
+        "Resource": [
+          "arn:aws:iam::*:user/${aws:username}",
+          "arn:aws:iam::*:user/dummmy"
+        ]
+      },
+      {
+          "Effect": "Allow",
+          "Action": "*",
+          "Resource": "*"
       }
     ]
   }
