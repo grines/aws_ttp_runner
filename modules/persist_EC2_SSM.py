@@ -84,7 +84,7 @@ def createec2_persist(ak,sk):
     instance = ec2.create_instances(
         ImageId='ami-003634241a8fcdec0', 
         MinCount=1, MaxCount=1, 
-        UserData=userdata, 
+      #  UserData=userdata, 
         IamInstanceProfile={
         'Name': 'SSM_EC2_Role'
         })

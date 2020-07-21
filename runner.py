@@ -12,7 +12,9 @@ from modules.lambda_enum import lambda_enum
 # Persistence modules
 from modules.persist_AccessKey import iam_persist
 from modules.persist_CreateUser import createuser_persist
-from modules.persist_EC2 import createec2_persist
+from modules.persist_EC2_SSM import createec2_persist
+from modules.persist_EC2_userdata import ec2userdata_persist
+from modules.persist_Lambda import lambda_persist
 # Helper modules
 from modules.helper_users import createuser, destroyuser
 
@@ -38,7 +40,9 @@ persisty = createuser(2)
 # TTPs
 ##iam_persist(persisty['AccessKey']['AccessKeyId'],persisty['AccessKey']['SecretAccessKey'])
 ##createuser_persist(persisty['AccessKey']['AccessKeyId'],persisty['AccessKey']['SecretAccessKey'])
-createec2_persist(persisty['AccessKey']['AccessKeyId'],persisty['AccessKey']['SecretAccessKey'])
+##createec2_persist(persisty['AccessKey']['AccessKeyId'],persisty['AccessKey']['SecretAccessKey'])
+##ec2userdata_persist(persisty['AccessKey']['AccessKeyId'],persisty['AccessKey']['SecretAccessKey'])
+lambda_persist(persisty['AccessKey']['AccessKeyId'],persisty['AccessKey']['SecretAccessKey'])
 
 # Destroy persistence user
 destroyuser(2,persisty['AccessKey']['AccessKeyId'])

