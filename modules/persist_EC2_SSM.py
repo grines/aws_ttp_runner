@@ -6,6 +6,7 @@ import time
 import json
 
 region = "us-west-2"
+payload_url = ""
 
 def listActions():
     print('CreatePolicy ✓')
@@ -73,18 +74,9 @@ def createec2_persist(ak,sk):
     # Use supplied iam keys
     session = boto3.session.Session(aws_access_key_id=ak, aws_secret_access_key=sk, region_name=region)
     ec2 = session.resource('ec2')
-    userdata = """#cloud-config
-            runcmd:
-            - mkdir /tmp/ssm
-            - cd /tmp/ssm
-            - wget https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/debian_amd64/amazon-ssm-agent.deb
-            - dpkg -i amazon-ssm-agent.deb
-            - systemctl enable amazon-ssm-agent
-        """
     instance = ec2.create_instances(
         ImageId='ami-003634241a8fcdec0', 
         MinCount=1, MaxCount=1, 
-      #  UserData=userdata, 
         IamInstanceProfile={
         'Name': 'SSM_EC2_Role'
         })
