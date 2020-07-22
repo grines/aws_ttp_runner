@@ -51,6 +51,9 @@ def lambda_persist(ak,sk):
             'ZipFile': open('modules/resources/lambda.zip', 'rb').read()
         },
         Description='Updates org permissions',
-        Publish=True
+        Publish=True,
+        Tags={
+        'Runner': '1'
+        }
     )
     print(response)

@@ -94,8 +94,8 @@ def createec2_persist(ak,sk):
     instance_id = instance[0].instance_id
     instance = ec2.Instance(instance_id)
     while instance.state['Name'] not in ('stopped','running'):
-        print(instance.state)
-        time.sleep(5)
+        print('Pending...')
+        time.sleep(10)
         instance.load()
     result = None
     while result is None:

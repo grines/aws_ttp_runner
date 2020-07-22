@@ -2,6 +2,7 @@
 # Hashicorp Red
 import boto3
 import time
+from botocore.exceptions import ClientError
 # Discovery modules
 from modules.ec2_enum_userdata import ec2_enum_userdata
 from modules.enum_network import enum_network
@@ -17,6 +18,7 @@ from modules.persist_EC2_userdata import ec2userdata_persist
 from modules.persist_Lambda import lambda_persist
 # Helper modules
 from modules.helper_users import createuser, destroyuser
+from modules.helper_cleanup import clean
 
 
 ### Enumeration/Discovery TTPs
@@ -36,16 +38,21 @@ from modules.helper_users import createuser, destroyuser
 
 ### Persistence TTPs
 # Create persistence user
-persisty = createuser(2)
+try:
+    persisty = createuser(2)
 # TTPs
-##iam_persist(persisty['AccessKey']['AccessKeyId'],persisty['AccessKey']['SecretAccessKey'])
-##createuser_persist(persisty['AccessKey']['AccessKeyId'],persisty['AccessKey']['SecretAccessKey'])
-createec2_persist(persisty['AccessKey']['AccessKeyId'],persisty['AccessKey']['SecretAccessKey'])
-##ec2userdata_persist(persisty['AccessKey']['AccessKeyId'],persisty['AccessKey']['SecretAccessKey'])
-##lambda_persist(persisty['AccessKey']['AccessKeyId'],persisty['AccessKey']['SecretAccessKey'])
+    #iam_persist(persisty['AccessKey']['AccessKeyId'],persisty['AccessKey']['SecretAccessKey'])
+    createuser_persist(persisty['AccessKey']['AccessKeyId'],persisty['AccessKey']['SecretAccessKey'])
+    #createec2_persist(persisty['AccessKey']['AccessKeyId'],persisty['AccessKey']['SecretAccessKey'])
+    #ec2userdata_persist(persisty['AccessKey']['AccessKeyId'],persisty['AccessKey']['SecretAccessKey'])
+    #lambda_persist(persisty['AccessKey']['AccessKeyId'],persisty['AccessKey']['SecretAccessKey'])
 
 # Destroy persistence user
 #destroyuser(2,persisty['AccessKey']['AccessKeyId'])
+    clean()
+except ClientError as e:
+    print(e)
+    clean()
 
 
 ### Privilege Escalation TTPs
